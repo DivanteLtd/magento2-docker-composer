@@ -1,0 +1,15 @@
+language: php
+php:
+  - '7.0'
+
+services:
+  - docker
+
+script: 
+  - docker build -t divante/magento2-docker-composer .
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push divante/magento2-docker-composer;
+    fi
